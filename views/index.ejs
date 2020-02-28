@@ -1,0 +1,248 @@
+<html>
+<!--https://gist.github.com/Gugic/cfc008599fa9a82eeba4127648009132#gistcomment-2237466-->
+<head>
+	<title>DialogFlow API Example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		var accessToken ="1abcf42df7b844bebb0449eca86422f5";
+    var baseUrl = "https://api.api.ai/api/";
+    // window.onload = sayHello()
+		$(document).ready(function() {  
+			$("#botInput").keypress(function(event) {
+				if (event.which == 13) {
+					event.preventDefault();
+					send();
+					this.value = '';
+					console.log(this)
+				}
+			});
+			// $("#botRec").click(function(event) {
+			// 	switchRecognition();
+			// });
+		});
+    // var recognition;
+
+		// function startRecognition() {
+		// 	recognition = new webkitSpeechRecognition();
+		// 	recognition.onstart = function(event) {
+		// 		updateRec();
+		// 	};
+		// 	recognition.onresult = function(event) {
+		// 		var text = "";
+		// 		for (var i = event.resultIndex; i < event.results.length; ++i) {
+		// 			text += event.results[i][0].transcript;
+		// 		}
+		// 		setInput(text);
+		// 		stopRecognition();
+		// 	};
+		// 	recognition.onend = function() {
+		// 		stopRecognition();
+		// 	};
+		// 	recognition.lang = "en-US";
+		// 	recognition.start();
+		// }
+		// function stopRecognition() {
+		// 	if (recognition) {
+		// 		recognition.stop();
+		// 		recognition = null;
+		// 	}
+		// 	updateRec();
+		// }
+		// function switchRecognition() {
+		// 	if (recognition) {
+		// 		stopRecognition();
+		// 	} else {
+		// 		startRecognition();
+		// 	}
+		// }
+		// function setInput(text) {
+		// 	$("#botInput").val(text);
+		// 	send();
+		// }
+		// function updateRec() {
+		// 	$("#botRec").text(recognition ? "Stop" : "Talk");
+		// }
+
+		function send() {
+			var text = $("#botInput").val();
+			document.getElementById('botInput').value='';
+			
+			// $("#botInput").val() = ''
+			conversation.push('<span class="botReplyUser"><span class="botIdUser">Me:</span><span class="botMsgUser">' + text + '</span></span>'); //div
+			$.ajax({
+				type: "POST",
+				url: baseUrl + "query?v=20150910",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				headers: {
+					"Authorization": "Bearer " + accessToken
+				},
+				data: JSON.stringify({ query: text, lang: "en", sessionId: "999999999" }),
+				success: function(data) {
+					var respText = data.result.fulfillment.speech;
+					console.log("Response: " + respText);
+					setResponse(respText);
+				},
+				error: function() {
+					setResponse("Internal Server Error");
+				}
+			});
+    }
+    
+
+	// function hide() {
+    //     ​$('#botInput').value=''
+	// 	send();
+	// 	​$('#botInput').value=''
+
+    // }
+
+    function sendButton(){
+      var txt = document.getElementById('male').value;
+      console.log(txt);
+      conversation.push('<span class="botReplyUser"><span class="botIdUser">Me:</span><span class="botMsgUser">' + txt + '</span></span>');
+      $.ajax({
+				type: "POST",
+				url: baseUrl + "query?v=20150910",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				headers: {
+					"Authorization": "Bearer " + accessToken
+				},
+				data: JSON.stringify({ query: txt, lang: "en", sessionId: "999999999" }),
+				success: function(data) {
+					var respText = data.result.fulfillment.speech;
+					console.log("Response: " + respText);
+					setResponse(respText);
+				},
+				error: function() {
+					setResponse("Internal Server Error");
+				}
+			});
+    }
+
+    function memberships(del_val){
+		// var cElements= document.getElementsByClassName("del")
+		// for (var i = 0 ; i < cElements.length; i++) {
+  		// 	 cElements[i].addEventListener('click' , hideshow , false ) ; 
+		// }	
+	//   $('.del').css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'none');
+	
+		console.log('Clicked')
+    setResponse(del_val); // or alert($(this).attr('id'));
+		
+	  $('.del').hide();
+	  var text = 'Please enter your mobile no';
+	  console.log(text);
+	  setResponse(text);
+    }
+
+	function showRHC(){
+		var txt = '<button onclick="benefits()">Benefits of RHC card</button><br><button>Doctor Locator at Ruby Hall Clinic</button><br><button>Terms and Conditions of RHC Card</button><br><button>Name Correction on RHC Card</button><br><button>Download HealthRx App</button>'
+		setResponse(txt)
+	}
+
+	function showCHS(){
+		var txt = 'Show brief details of the product: <br> • Customer ID: XXX <br>• Health Account No: XXX <br>• Health Checkup Package: XXX <br>•  Membership Card: <br> •  Insured By <br> •  Sum Insured <br><button>View your Welcome Letter</button><br><button>Benefits of Complete Health Solution</button><br><button>Correction in Policy Details</button><br><button>How to redeem lab benefit</button><br><button>How to redeem OPD benefit</button><br> '
+		setResponse(txt)
+	}
+
+	function benefits(del_val){
+		setResponse(del_val);
+
+	}
+
+	function know(del_val){
+		setResponse(del_val); // or alert($(this).attr('id'));
+	  $('.del').hide();
+		var txt = '<button onclick="benefits("Show RHC Card Benefits")">Show RHC Card Benefits</button><br><button>How to Appy for RHC Card</button>'
+		setResponse(txt)
+	}
+
+	function chs(){
+		var txt = 'The benefits included are:<ol><br><li>OPD Benefits at Ruby Hall Clinic</li><br><li>Health Insurance</li><br><li>Comprehensive health check-up plan at Ruby Hall Clinic</li><br></ol><button>Apply Now</button>'
+		setResponse(txt)
+	}
+
+	function getHRX(){
+		var txt = '<button>Know about Medicine Reminder</button><button>Know about Health vault</button><button>Know about appointment booking</button>'
+		setResponse(txt)
+	}
+
+	function whatsapp(){
+		var txt= 'Click below and subscribe to our WhatsApp service and get important updates delivered straight to your smart phone:<a href="#">CLICK HERE</a> '
+		setResponse(txt)
+	}
+
+	
+	function setResponse(val) {
+      if(val=='both'){conversation.push('<input type="radio" id="rhc" value="rhc" onclick= "showRHC()">RHC card</input><input type="radio" id="chs" onclick = "showCHS()">Complete Health Solution</input>')}
+	  else{
+			conversation.push('<span class="botReplyBot"><span class="botIdBot">sAmI:</span><span class="botMsgBot">' + val + '</span></span>'); 
+		}//div
+			$("#response").html(conversation.join("")); //div
+			$("#response-container").scrollTop($("#response").height());
+			$("#response .botReplyUser").removeClass("botReplyUserCurrent");
+			$("#response .botReplyUser").last().addClass("botReplyUserCurrent");
+			$("#response .botReplyBot").removeClass("botReplyBotCurrent");
+			$("#response .botReplyBot").last().addClass("botReplyBotCurrent");
+		}
+		var conversation = [];
+	</script>
+	<style type="text/css">
+		.bot{width:540px; height:530px; padding:5px; border-radius:5px; border:1px solid #eee; background:#e1dae8; overflow:hidden;}
+		.bot #response-container{width:calc(100%+350px); height:280px; overflow-x:hidden; overflow-y:auto;}
+		.bot #response{width:390px;}
+		.bot .botReplyUser{display:block; width:calc(100% - 10px); padding:5px; border-radius:5px; background:#eee; color:#888; margin-bottom:5px;}
+		.bot .botReplyBot{display:block; width:calc(100% - 12px); padding:5px; border-radius:5px; border:1px solid #eee; background:#5C2D90; color:#fff; margin-bottom:5px;font-family: 'Courier New', Courier, monospace; justify-content: center;}
+		.bot .botReplyUserCurrent{color:#555; background:#ddd;}
+		.bot .botReplyBotCurrent{color:#555; justify-content: center;}
+		.bot .botIdUser{display:none; }
+		.bot .botIdBot{display:none; }
+		.bot .botMsgUser{display:inline-block; }
+		.bot .botMsgBot{display:inline-block; color:#fff }
+		.bot #botInput{display:inline-block; width:290px; height:40px; border-radius:5px; border:1px solid #eee; line-height:30px; margin-right:10px;}
+		.bot #botRec{display:inline-block; width:40px; height:40px; border-radius:5px; border:1px solid #eee; background:#fff;}
+	</style>
+</head>
+
+
+<body>
+	<div class="bot">
+    <span class='botReplyBot'>Welcome to HealthRx by Bajaj Finserv<br>
+      Hi! I am XXXX, How can I help you today?<br>
+      Choose from the menu or type your question to get started.</span>
+      <button class='del' onclick="memberships('My Memberships')" value='My Memberships'>My Memberships</button><br><button class='del' onclick="know('Know about Health Card')">Know about Health Card</button><br><button class='del' onclick="chs()">Complete Health Solution</button><br><button class='del' onclick="getHRX()">Get HealthRx App</button><br><button class='del' onclick="whatsapp()">WhatsApp registration</button>
+  		<div id="response-container">
+        <div id="response"></div>    
+		</div>
+ 		<br/>
+    	<input id="botInput" type="text" placeholder="Hi, how can I help?" autocomplete="on" /><button id="botRec" onclick="send()">send</button>
+	</div>
+</body>
+
+</html>
+ 
+
+<!-- My Memberships 
+• Know about Health Card
+• Complete Health Solution 
+• Get HealthRx App
+• WhatsApp registration -->
+
+
+<!-- 
+• View your Welcome Letter 
+• Benefits of Complete Health Solution 
+• Correction in Policy Details 
+• How to redeem lab benefit 
+• How to redeem OPD benefit -->
+<!-- 
+The benefits included are: 
+
+👉 OPD Benefits at Ruby Hall Clinic
+
+👉 Health Insurance
+
+👉 Comprehensive health check-up plan at Ruby Hall Clinic -->
