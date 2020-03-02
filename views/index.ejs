@@ -134,12 +134,33 @@
 		
 	  $('.del').hide();
 	  var text = 'Please enter your mobile no';
-	  console.log(text);
+	  //console.log(text);
 	  setResponse(text);
-    }
+	}
+	
+	function doc(txt){
+		setResponse(txt);
+		$('.dell').hide();
+		var text = 'Please type the name of Doctor your are looking for';
+		setResponse(text);
+	}
+
+	function tnc(txt){
+		setResponse(txt);
+		$('.dell').hide();
+		var text = 'Document for T&Cs will open';
+		setResponse(text);
+	}
+
+	function name_corr(txt){
+		setResponse(txt);
+		$('.dell').hide();
+		var text = 'Request you to share your ID proof with correct name on our customer service E mail ID - customercare@healthrx.co.in';
+		setResponse(text);		
+	}
 
 	function showRHC(){
-		var txt = '<button onclick="benefits()">Benefits of RHC card</button><br><button>Doctor Locator at Ruby Hall Clinic</button><br><button>Terms and Conditions of RHC Card</button><br><button>Name Correction on RHC Card</button><br><button>Download HealthRx App</button>'
+		var txt = '<button class="dell" onclick="benefits()">Benefits of RHC card</button><br><button class="dell" onclick=doc()>Doctor Locator at Ruby Hall Clinic</button><br><button class="dell" onclick="tnc("Terms and Conditions of RHC Card")">Terms and Conditions of RHC Card</button><br><button class="dell" onclick="name_corr("Name Correction on RHC Card")">Name Correction on RHC Card</button><br><button class="dell">Download HealthRx App</button>'
 		setResponse(txt)
 	}
 
@@ -150,12 +171,12 @@
 
 	function benefits(del_val){
 		setResponse(del_val);
-
+		
 	}
 
 	function know(del_val){
 		setResponse(del_val); // or alert($(this).attr('id'));
-	  $('.del').hide();
+	    $('.del').hide();
 		var txt = '<button onclick="benefits("Show RHC Card Benefits")">Show RHC Card Benefits</button><br><button>How to Appy for RHC Card</button>'
 		setResponse(txt)
 	}
@@ -212,13 +233,14 @@
 	<div class="bot">
     <span class='botReplyBot'>Welcome to HealthRx by Bajaj Finserv<br>
       Hi! I am XXXX, How can I help you today?<br>
-      Choose from the menu or type your question to get started.</span>
+	  Choose from the menu or type your question to get started.
+	</span>
       <button class='del' onclick="memberships('My Memberships')" value='My Memberships'>My Memberships</button><br><button class='del' onclick="know('Know about Health Card')">Know about Health Card</button><br><button class='del' onclick="chs()">Complete Health Solution</button><br><button class='del' onclick="getHRX()">Get HealthRx App</button><br><button class='del' onclick="whatsapp()">WhatsApp registration</button>
   		<div id="response-container">
         <div id="response"></div>    
 		</div>
  		<br/>
-    	<input id="botInput" type="text" placeholder="Hi, how can I help?" autocomplete="on" /><button id="botRec" onclick="send()">send</button>
+    	<input id="botInput" type="text" placeholder="Hi, how can I help?"/><button id="botRec" onclick="send()">send</button>
 	</div>
 </body>
 
